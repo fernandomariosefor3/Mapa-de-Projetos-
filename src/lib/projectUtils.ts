@@ -158,4 +158,4 @@ export async function runProjectCheck(check: ProjectCheck): Promise<ProjectCheck
       checkedAt,
     };
   }
-    }
+}
