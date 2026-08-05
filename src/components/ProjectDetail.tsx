@@ -206,7 +206,7 @@ export default function ProjectDetail({
                     <p className="text-sm font-medium leading-6 text-[#405c57]">{activity.message}</p>
                     <p className="mt-1 flex items-center gap-1.5 text-xs font-semibold text-[#8b9a96]">
                       {activity.source === "Assistente de IA" ? <Bot size={13} /> : <UserRound size={13} />}
-                      {activity.source} Â· {formatRelativeDate(activity.createdAt)}
+                      {activity.source} · {formatRelativeDate(activity.createdAt)}
                     </p>
                   </div>
                 </div>
@@ -254,4 +254,4 @@ export default function ProjectDetail({
       </div>
     </motion.div>
   );
-    }
+}
