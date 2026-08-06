@@ -60,12 +60,19 @@ export default function App() {
   const alertCount = useMemo(() => getProjectAlerts(projects).length, [projects]);
 
   useEffect(() => {
+    // Timeout de segurança: desativa a tela de carregamento se o Firebase demorar
+    const safetyTimer = window.setTimeout(() => {
+      setAuthLoading(false);
+    }, 1500);
+
     if (!auth) {
       setAuthLoading(false);
-      return;
+      return () => window.clearTimeout(safetyTimer);
     }
+
     const firebaseAuth = auth;
-    return onAuthStateChanged(firebaseAuth, async (firebaseUser) => {
+    const unsubscribe = onAuthStateChanged(firebaseAuth, async (firebaseUser) => {
+      window.clearTimeout(safetyTimer);
       if (!firebaseUser) {
         setUser(null);
         setAuthLoading(false);
@@ -85,6 +92,11 @@ export default function App() {
       });
       setAuthLoading(false);
     });
+
+    return () => {
+      window.clearTimeout(safetyTimer);
+      unsubscribe();
+    };
   }, []);
 
   useEffect(() => {
